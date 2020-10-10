@@ -6,6 +6,7 @@ public class PlayerResources : MonoBehaviour
 {
     public int stone;
     public int iron;
+    public int electricRock;
 
     public void AddResource(string type, int amount)
     {
@@ -17,6 +18,10 @@ public class PlayerResources : MonoBehaviour
 
             case "Iron":
                 iron += amount;
+                break;
+
+            case "Electric Rock":
+                electricRock += amount;
                 break;
         }
 

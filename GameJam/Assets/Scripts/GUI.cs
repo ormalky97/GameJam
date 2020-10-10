@@ -8,6 +8,7 @@ public class GUI : MonoBehaviour
     [Header("Text Refs")]
     public Text stone;
     public Text iron;
+    public Text electricRock;
 
     PlayerResources playerResources;
 
@@ -22,5 +23,6 @@ public class GUI : MonoBehaviour
     {
         stone.text = "Stone: " + playerResources.stone;
         iron.text = "Iron: " + playerResources.iron;
+        electricRock.text = "Electric Rock: " + playerResources.electricRock;
     }
 }
