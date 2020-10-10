@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3606591075685211865}
   - component: {fileID: 3606591075685211867}
   - component: {fileID: 3606591075685211862}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Electric Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}

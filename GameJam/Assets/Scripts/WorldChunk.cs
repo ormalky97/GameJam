@@ -4,21 +4,38 @@ using UnityEngine;
 
 public class WorldChunk : MonoBehaviour
 {
+    [Header("Chunk Settings")]
     public int size = 10;
+    public int blockChance;     //1 in X Chances will spawn a block
 
-    public GameObject stoneBlock, ironBlock, electricBlock;
-    public int stoneChance, ironChance, electricChance;
+    [Header("Blocks Refs")]
+    public GameObject stoneBlock;
+    public GameObject ironBlock;
+    public GameObject electricBlock;
 
+    [Header("Chances")]
+    public int stoneChance;
+    public int ironChance;
+    public int electricChance;
+
+    //Inner Vars
     int xMin, yMin, xMax, yMax;
+    int totalChance;
 
     // Start is called before the first frame update
     void Awake()
     {
+        //Initialize
+        totalChance = stoneChance + ironChance + electricChance;
+
         //Get Boundries
         xMin = (int)transform.position.x - size / 2;
         xMax = (int)transform.position.x + size / 2;
         yMin = (int)transform.position.y - size / 2;
         yMax = (int)transform.position.y + size / 2;
+
+        //Populate Chunk
+        GenerateChunk();
     }
 
     public void NewChunks()
@@ -82,23 +99,26 @@ public class WorldChunk : MonoBehaviour
         }
     }
 
+    GameObject ChooseNextBlock()
+    {
+        int rand = Random.Range(1, totalChance);
+
+        if (rand <= electricChance)
+            return electricBlock;
+        else if (rand <= ironChance + electricChance)
+            return ironBlock;
+        else if (rand <= stoneChance + ironChance + electricChance)
+            return stoneBlock;
+
+        return null;
+    }
+
     void GenerateBlock(int x, int y)
     {
-        GameObject newBlock = null;
-        int rand = Random.Range(0, 100);
-
-        if (rand < stoneChance)
-        {
-            newBlock = Instantiate(stoneBlock, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (rand < ironChance)
-        {
-            newBlock = Instantiate(ironBlock, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (rand < electricChance)
-        {
-            newBlock = Instantiate(electricBlock, new Vector2(x, y), Quaternion.identity);
-        }
+        GameObject newBlock = ChooseNextBlock();
+        Collider2D hit = Physics2D.OverlapBox(new Vector2(x, y), new Vector2(1, 1), 0f, LayerMask.GetMask("Blocks"));
+        if(hit == null)
+            Instantiate(newBlock, new Vector3(x, y, -1), Quaternion.identity);
     }
 
     void GenerateChunk()
@@ -107,7 +127,8 @@ public class WorldChunk : MonoBehaviour
         {
             for (int y = yMin; y <= yMax; y++)
             {
-                GenerateBlock(x, y);
+                if(Random.Range(0, blockChance) == 0)
+                    GenerateBlock(x, y);
             }
         }
 
