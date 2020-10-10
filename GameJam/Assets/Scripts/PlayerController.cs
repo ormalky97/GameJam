@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         //Movement & Rotation
-        rb.velocity = movement * moveSpeed;
+        rb.velocity = movement.normalized * moveSpeed;
         rb.SetRotation(angle);
     }
 
