@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         //Movement & Rotation
         rb.velocity = movement.normalized * moveSpeed;
-        rb.SetRotation(angle);
+        
     }
 
     //Update angle to look at mouse
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 dir = cam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        rb.SetRotation(angle);
         //rotation only updates in FixedUpdate
     }
 }

@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    public int maxHealth;
     public int damage;
     public float range;
     public float fireRate;
 
-    public GameObject shot;
-
     GameObject target;
     Rigidbody2D rb;
 
-    float timeOut = 0f;
+    int health;
+    bool canShoot = true;
 
     // Start is called before the first frame update
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -29,18 +30,22 @@ public class Turret : MonoBehaviour
         else
         {
             SetRotation();
-
-            if (timeOut <= 0)
-            {
-                Shoot();
-            }
+            StartCoroutine("Shoot");
         } 
     }
 
-    void Shoot()
+    IEnumerator Shoot()
     {
         //shoot
-        //draw
+        if(canShoot)
+        {
+            canShoot = false;
+            target.GetComponent<Enemy>().RecieveDamage(damage, gameObject);
+            //draw
+            yield return new WaitForSeconds(fireRate);
+            canShoot = true;
+        }
+
     }
 
     void SetRotation()

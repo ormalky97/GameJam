@@ -32,12 +32,7 @@ public class BuildButton : MonoBehaviour
     {
         if(CheckResources())
         {
-            //Create Placer
             Instantiate(placer, transform.position, Quaternion.identity);
-
-            //Decreaase resources
-            playerRes.stone -= stoneCost;
-            playerRes.iron -= ironCost;
         }
     }
 }

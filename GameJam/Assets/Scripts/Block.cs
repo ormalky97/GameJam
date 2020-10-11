@@ -13,6 +13,36 @@ public class Block : MonoBehaviour
     void Awake()
     {
         player = GameObject.Find("Player");
+        GenerateAmount();
+    }
+
+    void GenerateAmount()
+    {
+        int dis = (int) Vector2.Distance(transform.position, new Vector2(0, 0));
+
+        switch (type)
+        {
+            case "Stone":
+                if (dis / 100 > 0)
+                    amount = Random.Range(1, 5) * dis / 100;
+                else
+                    amount = Random.Range(1, 5);
+                break;
+
+            case "Iron":
+                if (dis / 200 > 0)
+                    amount = Random.Range(1, 4) * dis / 200;
+                else
+                    amount = Random.Range(1, 2);
+                break;
+
+            case "Electric Rock":
+                if (dis / 200 > 0)
+                    amount = Random.Range(1, 3) * dis / 200;
+                else
+                    amount = Random.Range(1, 2);
+                break;
+        }
     }
 
     private void OnMouseDown()

@@ -114,7 +114,7 @@ public class WorldChunk : MonoBehaviour
 
     GameObject ChooseNextBlock()
     {
-        float rand = Random.Range(1, totalChance);
+        float rand = Random.Range(0, totalChance+1);
 
         if (rand <= electricChance)
             return electricBlock;
@@ -131,7 +131,7 @@ public class WorldChunk : MonoBehaviour
         GameObject newBlock = ChooseNextBlock();
         GameObject temp;
 
-        Collider2D hit = Physics2D.OverlapBox(new Vector2(x, y), new Vector2(1, 1), 0f, LayerMask.GetMask("Blocks"));
+        Collider2D hit = Physics2D.OverlapPoint(new Vector2(x, y), LayerMask.GetMask("Blocks"));
         if(hit == null)
         {
             temp = Instantiate(newBlock, new Vector3(x, y, -1), Quaternion.identity);
